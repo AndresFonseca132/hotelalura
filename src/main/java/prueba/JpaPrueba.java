@@ -7,15 +7,10 @@ import modelo.Reserva;
 import utils.JPAUtils;
 
 import javax.persistence.EntityManager;
-import java.math.BigDecimal;
 import java.time.LocalDate;
 
 public class JpaPrueba {
     public static void main(String[] args) {
-        Reserva reserva = new Reserva();
-        reserva.setFechaEntrada(LocalDate.of(2023, 7, 20));
-        reserva.setFechaSalida(LocalDate.of(2023, 7, 25));
-        reserva.setValor(new BigDecimal(230));
 
         Huesped huesped = new Huesped();
         huesped.setNombre("Juan");
@@ -23,20 +18,14 @@ public class JpaPrueba {
         huesped.setFechaNacimiento(LocalDate.of(1990, 5, 20));
         huesped.setNacionalidad("Colmbiano");
         huesped.setTelefono("3056728");
-        huesped.setReserva(reserva);
+        huesped.setReserva(new Reserva());
 
         EntityManager em = JPAUtils.getEntityManager();
 
         ReservaDao reservaDao = new ReservaDao(em);
         HuespedDao huespedDao = new HuespedDao(em);
+        //reservaDao.guardar(LocalDate.of(2023, 7, 20), LocalDate.of(2023, 7, 25), 200.0, "Efectivo");
+        huespedDao.guardar("Juan", "Perez", LocalDate.of(1990, 5, 20), "Colombiano", "3056728", reservaDao.obtenerReserva(1l));
 
-        em.getTransaction().begin();
-
-        reservaDao.guardar(reserva);
-        huespedDao.guardar(huesped);
-
-        em.getTransaction().commit();
-
-        em.close();
     }
 }

@@ -22,8 +22,6 @@ public class UsuarioController {
     }
 
     public boolean acceder(String email, String password) {
-        System.out.println(email);
-        System.out.println(password);
         return this.usuarioDao.acceder(email, password);
 
     }

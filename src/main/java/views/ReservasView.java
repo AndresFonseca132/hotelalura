@@ -10,8 +10,12 @@ import javax.swing.JOptionPane;
 import javax.swing.ImageIcon;
 import java.awt.Color;
 import javax.swing.JTextField;
+
+import Controller.ReservaController;
 import com.toedter.calendar.JDateChooser;
+import dao.ReservaDao;
 import dao.UsuarioDao;
+import modelo.Reserva;
 import modelo.Usuario;
 
 import java.awt.Font;
@@ -23,6 +27,10 @@ import java.awt.event.MouseMotionAdapter;
 import java.awt.Toolkit;
 import java.beans.PropertyChangeListener;
 import java.beans.PropertyChangeEvent;
+import java.time.LocalDate;
+import java.time.ZoneId;
+import java.time.temporal.ChronoUnit;
+import java.util.Date;
 import javax.swing.JSeparator;
 import javax.swing.SwingConstants;
 import javax.swing.border.LineBorder;
@@ -248,6 +256,20 @@ public class ReservasView extends JFrame {
 		txtFechaSalida.addPropertyChangeListener(new PropertyChangeListener() {
 			public void propertyChange(PropertyChangeEvent evt) {
 				//Activa el evento, después del usuario seleccionar las fechas se debe calcular el valor de la reserva
+				LocalDate fechaEntrada = txtFechaEntrada.getDate() != null
+						? txtFechaEntrada.getDate().toInstant().atZone(ZoneId.systemDefault()).toLocalDate()
+						: null;
+				LocalDate fechaSalida = txtFechaSalida.getDate() != null
+						? txtFechaSalida.getDate().toInstant().atZone(ZoneId.systemDefault()).toLocalDate()
+						: null;
+
+				if (fechaEntrada != null && fechaSalida != null){
+					long diasDeEstadia = ChronoUnit.DAYS.between(fechaEntrada, fechaSalida);
+					double valorPorDia = 30;
+					double total = diasDeEstadia * valorPorDia;
+
+					txtValor.setText("" + total);
+				}
 			}
 		});
 		txtFechaSalida.setDateFormatString("yyyy-MM-dd");
@@ -280,8 +302,21 @@ public class ReservasView extends JFrame {
 			@Override
 			public void mouseClicked(MouseEvent e) {
 				if (ReservasView.txtFechaEntrada.getDate() != null && ReservasView.txtFechaSalida.getDate() != null) {		
+					Date FechaIngresoSeleccionada = ReservasView.txtFechaEntrada.getDate();
+					Date FechaSalidaSeleccionada = ReservasView.txtFechaSalida.getDate();
+
+					LocalDate fechaIngreso = FechaIngresoSeleccionada.toInstant().atZone(ZoneId.systemDefault())
+							.toLocalDate();
+					LocalDate fechaSalida = FechaSalidaSeleccionada.toInstant().atZone(ZoneId.systemDefault())
+							.toLocalDate();
+
+					Double valor = Double.parseDouble(ReservasView.txtValor.getText());
+					String formaPago = ReservasView.txtFormaPago.getSelectedItem().toString();
+					Reserva reserva = new ReservaController().guardar(fechaIngreso, fechaSalida, valor, formaPago);
 					RegistroHuesped registro = new RegistroHuesped(userActual);
 					registro.setVisible(true);
+					JOptionPane.showMessageDialog(null, "El numero de la reserva es: " + reserva.getId());
+					dispose();
 				} else {
 					JOptionPane.showMessageDialog(null, "Debes llenar todos los campos.");
 				}

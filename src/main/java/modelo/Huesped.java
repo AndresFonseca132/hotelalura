@@ -18,7 +18,8 @@ public class Huesped implements Serializable {
     private String Telefono;
 
     // Campo relacionado con la entidad de reserva
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "Numero_de_reserva")
     private Reserva reserva;
 
     // Constructor Vacio
