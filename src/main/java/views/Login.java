@@ -239,8 +239,8 @@ public class Login extends JFrame {
 	}
 	
 	private void Login() {
-		 String email= new String(txtUsuario.getText());
-	     String password=txtContrasena.getText();
+		 String email = new String(txtUsuario.getText());
+	     String password = txtContrasena.getText();
 		 try{
 			 Boolean concederAcceso = new UsuarioController().acceder(email, password);
 			 Usuario userActual = new UsuarioController().obtenerUsuario(email, password);
