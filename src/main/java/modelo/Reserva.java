@@ -10,7 +10,9 @@ public class Reserva {
     @Id
     @GeneratedValue(strategy= GenerationType.IDENTITY)
     private Long Id;
+    @Temporal(TemporalType.DATE)
     private Date fechaEntrada;
+    @Temporal(TemporalType.DATE)
     private Date fechaSalida;
     private BigDecimal valor;
 
