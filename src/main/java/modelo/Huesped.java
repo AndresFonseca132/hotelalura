@@ -1,18 +1,19 @@
 package modelo;
 
+import java.io.Serializable;
 import javax.persistence.*;
+import java.time.LocalDate;
 import java.util.Date;
 
 @Entity
 @Table(name="huespedes")
-public class Huesped {
+public class Huesped implements Serializable {
     @Id
     @GeneratedValue(strategy= GenerationType.IDENTITY)
-    private Long Id;
+    private Long id;
     private String nombre;
     private String apellido;
-    @Temporal(TemporalType.DATE)
-    private Date fechaNacimiento;
+    private LocalDate fechaNacimiento;
     private String nacionalidad;
     private String Telefono;
 
@@ -24,17 +25,17 @@ public class Huesped {
     public Huesped() {}
 
     // Constructor con Parametros
-    public Huesped(String nombre, String apellido, Date fechaNacimiento, String nacionalidad, String telefono, Reserva reserva) {
+    public Huesped(String nombre, String apellido, LocalDate fechaNacimiento, String nacionalidad, String telefono, Reserva reserva) {
         this.nombre = nombre;
         this.apellido = apellido;
         this.fechaNacimiento = fechaNacimiento;
         this.nacionalidad = nacionalidad;
-        Telefono = telefono;
+        this.Telefono = telefono;
         this.reserva = reserva;
     }
 
     public Long getId() {
-        return Id;
+        return id;
     }
 
     public String getNombre() {
@@ -53,11 +54,11 @@ public class Huesped {
         this.apellido = apellido;
     }
 
-    public Date getFechaNacimiento() {
+    public LocalDate getFechaNacimiento() {
         return fechaNacimiento;
     }
 
-    public void setFechaNacimiento(Date fechaNacimiento) {
+    public void setFechaNacimiento(LocalDate fechaNacimiento) {
         this.fechaNacimiento = fechaNacimiento;
     }
 

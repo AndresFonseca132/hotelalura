@@ -1,6 +1,10 @@
 package views;
 
+import Controller.UsuarioController;
+import modelo.Usuario;
+
 import java.awt.EventQueue;
+import javax.persistence.NoResultException;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
@@ -235,18 +239,22 @@ public class Login extends JFrame {
 	}
 	
 	private void Login() {
-		 String Usuario= "admin";
-	     String Contraseña="admin";
+		 String email= new String(txtUsuario.getText());
+	     String password=txtContrasena.getText();
+		 try{
+			 Boolean concederAcceso = new UsuarioController().acceder(email, password);
+			 Usuario userActual = new UsuarioController().obtenerUsuario(email, password);
+			 if(concederAcceso){
+				 MenuUsuario menu = new MenuUsuario(userActual);
+				 menu.setVisible(true);
+				 dispose();
+			 }else {
+				 JOptionPane.showMessageDialog(this, "Usuario o Contraseña no válidos");
+			 }
+		 }catch (NoResultException e){
+			 JOptionPane.showMessageDialog(null, "Usuario o Contraseña no válidos");
+		 }
 
-	        String contrase=new String (txtContrasena.getPassword());
-
-	        if(txtUsuario.getText().equals(Usuario) && contrase.equals(Contraseña)){
-	            MenuUsuario menu = new MenuUsuario();
-	            menu.setVisible(true);
-	            dispose();	 
-	        }else {
-	            JOptionPane.showMessageDialog(this, "Usuario o Contraseña no válidos");
-	        }
 	} 
 	 private void headerMousePressed(MouseEvent evt) {
 	        xMouse = evt.getX();

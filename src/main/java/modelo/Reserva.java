@@ -1,46 +1,47 @@
 package modelo;
 
+import java.io.Serializable;
 import javax.persistence.*;
 import java.math.BigDecimal;
-import java.util.Date;
+import java.time.LocalDate;
 
 @Entity
 @Table(name="reservas")
-public class Reserva {
+public class Reserva implements Serializable {
     @Id
     @GeneratedValue(strategy= GenerationType.IDENTITY)
-    private Long Id;
-    @Temporal(TemporalType.DATE)
-    private Date fechaEntrada;
-    @Temporal(TemporalType.DATE)
-    private Date fechaSalida;
+    private Long id;
+    private LocalDate fechaEntrada;
+    private LocalDate fechaSalida;
     private BigDecimal valor;
+    private String formaDePago;
 
     public Reserva() {}
 
-    public Reserva(Date fechaEntrada, Date fechaSalida, BigDecimal valor) {
+    public Reserva(LocalDate fechaEntrada, LocalDate fechaSalida, BigDecimal valor, String formaDePago) {
         this.fechaEntrada = fechaEntrada;
         this.fechaSalida = fechaSalida;
         this.valor = valor;
+        this.formaDePago = formaDePago;
     }
 
     public Long getId() {
-        return Id;
+        return id;
     }
 
-    public Date getFechaEntrada() {
+    public LocalDate getFechaEntrada() {
         return fechaEntrada;
     }
 
-    public void setFechaEntrada(Date fechaEntrada) {
+    public void setFechaEntrada(LocalDate fechaEntrada) {
         this.fechaEntrada = fechaEntrada;
     }
 
-    public Date getFechaSalida() {
+    public LocalDate getFechaSalida() {
         return fechaSalida;
     }
 
-    public void setFechaSalida(Date fechaSalida) {
+    public void setFechaSalida(LocalDate fechaSalida) {
         this.fechaSalida = fechaSalida;
     }
 
@@ -50,5 +51,13 @@ public class Reserva {
 
     public void setValor(BigDecimal valor) {
         this.valor = valor;
+    }
+
+    public String getFormaDePago() {
+        return formaDePago;
+    }
+
+    public void setFormaDePago(String formaDePago) {
+        this.formaDePago = formaDePago;
     }
 }
