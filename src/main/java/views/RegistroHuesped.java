@@ -1,27 +1,30 @@
 package views;
 
 import java.awt.EventQueue;
-import javax.swing.JFrame;
-import javax.swing.JPanel;
+import javax.persistence.EntityManager;
+import javax.swing.*;
 import javax.swing.border.EmptyBorder;
-import javax.swing.JTextField;
 import java.awt.Color;
-import com.toedter.calendar.JDateChooser;
-import modelo.Usuario;
 
-import javax.swing.JComboBox;
-import javax.swing.DefaultComboBoxModel;
-import javax.swing.JLabel;
+import Controller.HuespedController;
+import Controller.ReservaController;
+import com.toedter.calendar.JDateChooser;
+import dao.ReservaDao;
+import modelo.Huesped;
+import modelo.Reserva;
+import modelo.Usuario;
+import utils.JPAUtils;
+
 import java.awt.Font;
-import javax.swing.ImageIcon;
 import java.awt.SystemColor;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseMotionAdapter;
 import java.text.Format;
 import java.awt.Toolkit;
-import javax.swing.SwingConstants;
-import javax.swing.JSeparator;
+import java.time.LocalDate;
+import java.time.ZoneId;
+import java.util.Date;
 
 @SuppressWarnings("serial")
 public class RegistroHuesped extends JFrame {
@@ -37,7 +40,7 @@ public class RegistroHuesped extends JFrame {
 	private JLabel labelAtras;
 	int xMouse, yMouse;
 
-	public RegistroHuesped(Usuario userActual) {
+	public RegistroHuesped(Reserva reserva, Usuario userActual) {
 		
 		setIconImage(Toolkit.getDefaultToolkit().getImage(RegistroHuesped.class.getResource("/imagenes/lOGO-50PX.png")));
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -75,7 +78,8 @@ public class RegistroHuesped extends JFrame {
 		btnAtras.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
-				ReservasView reservas = new ReservasView(userActual);
+				ReservasView reservas = new ReservasView(userActual
+				);
 				reservas.setVisible(true);
 				dispose();				
 			}
@@ -245,6 +249,35 @@ public class RegistroHuesped extends JFrame {
 		labelGuardar.setFont(new Font("Roboto", Font.PLAIN, 18));
 		labelGuardar.setBounds(0, 0, 122, 35);
 		btnguardar.add(labelGuardar);
+		btnguardar.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				boolean camposObligatorios = txtFechaN.getDate() == null || txtNombre.getText().isEmpty()
+						|| txtApellido.getText().isEmpty() || txtTelefono.getText().isEmpty()
+						|| txtNreserva.getText().isEmpty();
+				if (camposObligatorios){
+					JOptionPane.showMessageDialog(null, "Debes llenar todos los campos.");
+				}else{
+					Date fechaNSeleccionada = txtFechaN.getDate();
+					LocalDate fechaNacimiento = fechaNSeleccionada.toInstant().atZone(ZoneId.systemDefault())
+							.toLocalDate();
+
+					String nombre = txtNombre.getText();
+					String apellido = txtApellido.getText();
+					String nacionalidad = txtNacionalidad.getSelectedItem().toString();
+					String telefono = txtTelefono.getText();
+					if (telefono.matches("^\\d{10}$")) {
+						HuespedController huespedController = new HuespedController();
+						huespedController.guardar(nombre, apellido, fechaNacimiento, nacionalidad, telefono,reserva);
+						dispose();
+						Exito exito = new Exito(userActual);
+						exito.setVisible(true);
+					} else {
+						JOptionPane.showMessageDialog(null, "Debes ingresar un numero correcto");
+					}
+				}
+			}
+		});
 		
 		JPanel panel = new JPanel();
 		panel.setBounds(0, 0, 489, 634);
@@ -261,7 +294,7 @@ public class RegistroHuesped extends JFrame {
 		logo.setBounds(194, 39, 104, 107);
 		panel.add(logo);
 		logo.setIcon(new ImageIcon(RegistroHuesped.class.getResource("/imagenes/Ha-100px.png")));
-		
+
 		JPanel btnexit = new JPanel();
 		btnexit.setBounds(857, 0, 53, 36);
 		contentPane.add(btnexit);
@@ -276,7 +309,7 @@ public class RegistroHuesped extends JFrame {
 			public void mouseEntered(MouseEvent e) {
 				btnexit.setBackground(Color.red);
 				labelExit.setForeground(Color.white);
-			}			
+			}
 			@Override
 			public void mouseExited(MouseEvent e) {
 				 btnexit.setBackground(Color.white);
@@ -285,7 +318,7 @@ public class RegistroHuesped extends JFrame {
 		});
 		btnexit.setLayout(null);
 		btnexit.setBackground(Color.white);
-		
+
 		labelExit = new JLabel("X");
 		labelExit.setBounds(0, 0, 53, 36);
 		btnexit.add(labelExit);

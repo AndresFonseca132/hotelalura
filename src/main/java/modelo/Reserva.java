@@ -17,7 +17,7 @@ public class Reserva implements Serializable {
     private Double valor;
     private String formaDePago;
 
-    @OneToMany(mappedBy = "reserva")
+    @OneToMany(mappedBy = "reserva", cascade = CascadeType.ALL)
     private List<Huesped> huespedes;
 
     public Reserva() {}

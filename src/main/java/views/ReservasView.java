@@ -1,15 +1,8 @@
 package views;
 
-import java.awt.EventQueue;
-import javax.swing.JFrame;
-import javax.swing.JPanel;
+import java.awt.*;
+import javax.swing.*;
 import javax.swing.border.EmptyBorder;
-import java.awt.SystemColor;
-import javax.swing.JLabel;
-import javax.swing.JOptionPane;
-import javax.swing.ImageIcon;
-import java.awt.Color;
-import javax.swing.JTextField;
 
 import Controller.ReservaController;
 import com.toedter.calendar.JDateChooser;
@@ -18,21 +11,15 @@ import dao.UsuarioDao;
 import modelo.Reserva;
 import modelo.Usuario;
 
-import java.awt.Font;
-import javax.swing.JComboBox;
-import javax.swing.DefaultComboBoxModel;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseMotionAdapter;
-import java.awt.Toolkit;
 import java.beans.PropertyChangeListener;
 import java.beans.PropertyChangeEvent;
 import java.time.LocalDate;
 import java.time.ZoneId;
 import java.time.temporal.ChronoUnit;
 import java.util.Date;
-import javax.swing.JSeparator;
-import javax.swing.SwingConstants;
 import javax.swing.border.LineBorder;
 
 
@@ -266,9 +253,12 @@ public class ReservasView extends JFrame {
 				if (fechaEntrada != null && fechaSalida != null){
 					long diasDeEstadia = ChronoUnit.DAYS.between(fechaEntrada, fechaSalida);
 					double valorPorDia = 30;
-					double total = diasDeEstadia * valorPorDia;
-
-					txtValor.setText("" + total);
+					if (diasDeEstadia < 0){
+						txtValor.setText("No se permiten fechas anteriores a la actual");
+					}else {
+						double total = diasDeEstadia * valorPorDia;
+						txtValor.setText("" + total);
+					}
 				}
 			}
 		});
@@ -284,7 +274,7 @@ public class ReservasView extends JFrame {
 		txtValor.setBounds(78, 328, 43, 33);
 		txtValor.setEditable(false);
 		txtValor.setFont(new Font("Roboto Black", Font.BOLD, 17));
-		txtValor.setBorder(javax.swing.BorderFactory.createEmptyBorder());
+		txtValor.setBorder(BorderFactory.createEmptyBorder());
 		panel.add(txtValor);
 		txtValor.setColumns(10);
 
@@ -298,6 +288,23 @@ public class ReservasView extends JFrame {
 		panel.add(txtFormaPago);
 
 		JPanel btnsiguiente = new JPanel();
+		btnsiguiente.setBounds(723, 560, 122, 35);
+		btnsiguiente.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent e) {
+			}
+		});
+		btnsiguiente.setLayout(null);
+		btnsiguiente.setBackground(new Color(12, 138, 199));
+		contentPane.add(btnsiguiente);
+		btnsiguiente.setCursor(new Cursor(Cursor.HAND_CURSOR));
+
+		JLabel labelGuardar = new JLabel("Siguiente");
+		labelGuardar.setHorizontalAlignment(SwingConstants.CENTER);
+		labelGuardar.setForeground(Color.WHITE);
+		labelGuardar.setFont(new Font("Roboto", Font.PLAIN, 18));
+		labelGuardar.setBounds(0, 0, 122, 35);
+		btnsiguiente.add(labelGuardar);
 		btnsiguiente.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
@@ -313,7 +320,7 @@ public class ReservasView extends JFrame {
 					Double valor = Double.parseDouble(ReservasView.txtValor.getText());
 					String formaPago = ReservasView.txtFormaPago.getSelectedItem().toString();
 					Reserva reserva = new ReservaController().guardar(fechaIngreso, fechaSalida, valor, formaPago);
-					RegistroHuesped registro = new RegistroHuesped(userActual);
+					RegistroHuesped registro = new RegistroHuesped(reserva, userActual);
 					registro.setVisible(true);
 					JOptionPane.showMessageDialog(null, "El numero de la reserva es: " + reserva.getId());
 					dispose();
@@ -326,7 +333,7 @@ public class ReservasView extends JFrame {
 		btnsiguiente.setBackground(SystemColor.textHighlight);
 		btnsiguiente.setBounds(238, 493, 122, 35);
 		panel.add(btnsiguiente);
-		btnsiguiente.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+		btnsiguiente.setCursor(new Cursor(Cursor.HAND_CURSOR));
 
 
 	}

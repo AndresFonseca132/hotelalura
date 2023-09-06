@@ -5,6 +5,7 @@ import modelo.Reserva;
 import utils.JPAUtils;
 
 import javax.persistence.EntityManager;
+import javax.swing.table.DefaultTableModel;
 import java.time.LocalDate;
 
 public class ReservaController {
@@ -22,4 +23,23 @@ public class ReservaController {
         return reservaDao.guardar(fechaIngreso, fechaSalida, valor, formaDePago);
     }
 
+    public DefaultTableModel listar(){
+        return reservaDao.listar();
+    }
+
+    public void modificar(javax.swing.JTable tablaReservas){
+        reservaDao.editar(tablaReservas);
+    }
+
+    public void eliminar(Long id){
+        reservaDao.remover(id);
+    }
+
+    public DefaultTableModel buscarPorApellido(String apellido) {
+        return reservaDao.buscarReservasPorApellidoHuesped(apellido);
+    }
+
+    public DefaultTableModel buscarPorId(Long id) {
+        return reservaDao.buscarReservaPorId(id);
+    }
 }
