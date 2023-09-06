@@ -52,25 +52,26 @@ public class HuespedDao {
         Long id = (Long) tablaHuespedes.getValueAt(filaSeleccionada, 0);
         String nombreModificado = tablaHuespedes.getValueAt(filaSeleccionada, 1).toString();
         String apellidoModificado = tablaHuespedes.getValueAt(filaSeleccionada, 2).toString();
-        String fechaNacimento = tablaHuespedes.getValueAt(filaSeleccionada, 3).toString();
+        String fechaNacimiento = tablaHuespedes.getValueAt(filaSeleccionada, 3).toString();
         DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyy-MM-dd");
-        LocalDate fechaDeNacimientoModificada = LocalDate.parse(fechaNacimento, dtf);
+        LocalDate fechaNacimientoModificada = LocalDate.parse(fechaNacimiento, dtf);
         String nacionalidadModificada = tablaHuespedes.getValueAt(filaSeleccionada, 4).toString();
-        String telefono = tablaHuespedes.getValueAt(filaSeleccionada, 5).toString();
+        String Telefono = tablaHuespedes.getValueAt(filaSeleccionada, 5).toString();
 
         em.getTransaction().begin();
         Huesped huesped = em.find(Huesped.class, id);
-        if(huesped != null) {
+        if (huesped != null) {
             huesped.setNombre(nombreModificado);
             huesped.setApellido(apellidoModificado);
-            huesped.setFechaNacimiento(fechaDeNacimientoModificada);
+            huesped.setFechaNacimiento(fechaNacimientoModificada);
             huesped.setNacionalidad(nacionalidadModificada);
-            huesped.setTelefono(telefono);
+            huesped.setTelefono(Telefono);
             em.merge(huesped);
             em.getTransaction().commit();
-        }else {
+        } else {
             em.getTransaction().rollback();
         }
+
         em.close();
     }
 
