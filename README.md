@@ -1,6 +1,6 @@
 # Hotel Alura
 ## Formacion Backend Oracle Next Education
-![image](https://github.com/AndresFonseca132/hotelalura/assets/125603660/d4ef6475-4fee-4817-9889-24177c259876)
+![image](https://github.com/AndresFonseca132/hotelalura/assets/125603660/57716845-e85f-44d5-b12c-23b2cf948aca)
 ## Descripcion
 Este proyecto hace parte de la formacion de desarrollador Backend que imparte Alura junto a Oracle, siendo asi que este es un Challenge que consiste en la creacion de una app de escritorio creada a partir del lenguaje de Java junto a las librerias de JPA y Swing, en donde se deben de cumplir ciertos requisitos de funcionamiento. Entre estos requisitos encontramos:
 1. Permitir iniciar Sesion unicamente a los usuario que esten en el sistema
@@ -49,26 +49,27 @@ Dentro del archivo `pom.xml` escribimos las dependencias que fueron necesarias p
 A continuacion se muestran las diversas interfaces:
 
 ### Login
-![image](https://github.com/AndresFonseca132/hotelalura/assets/125603660/60814abc-21df-4278-8913-778e8665aefc)
+![image](https://github.com/AndresFonseca132/hotelalura/assets/125603660/3cc420e4-cf1e-4742-ab77-34b9f1008b65)
 
 ## Pagina Principal
-![image](https://github.com/AndresFonseca132/hotelalura/assets/125603660/d5a2aa0d-ec94-40e3-845b-a91a723feeab)
+![image](https://github.com/AndresFonseca132/hotelalura/assets/125603660/924a9b3e-6eaa-493a-89fc-a626a6895c22)
 
 ## Registro de Reserva
-![image](https://github.com/AndresFonseca132/hotelalura/assets/125603660/6bab5934-a4c0-459a-b767-bf03f726e6c5)
+![image](https://github.com/AndresFonseca132/hotelalura/assets/125603660/4b1a900a-02a1-4a4a-8317-483c2470b515)
 
 ## Exito Reserva
-![image](https://github.com/AndresFonseca132/hotelalura/assets/125603660/7864a4ad-1121-4ad1-a355-8f9ad924f828)
+![image](https://github.com/AndresFonseca132/hotelalura/assets/125603660/e635a916-7250-418a-849f-830efef9a824)
 
 ## Registro Huesped
-![image](https://github.com/AndresFonseca132/hotelalura/assets/125603660/5f43743e-2fa2-49b4-9b64-cba40e3e9ae7)
+![image](https://github.com/AndresFonseca132/hotelalura/assets/125603660/2ad23288-13ed-4d16-bf8e-44b8a1ef4272)
 
 ## Exito Huesped
-![image](https://github.com/AndresFonseca132/hotelalura/assets/125603660/a92159b8-be41-4320-bed5-33dbd9ff5564)
+![image](https://github.com/AndresFonseca132/hotelalura/assets/125603660/bd08a562-c284-4b5e-9704-1f0f4d6f70c8)
 
 ## Tabla Reservas
-![image](https://github.com/AndresFonseca132/hotelalura/assets/125603660/180d19eb-4a63-4ae2-acf4-107b620501e9)
+![image](https://github.com/AndresFonseca132/hotelalura/assets/125603660/e9ea9cc3-c315-4c1f-b99e-508e9ce0c61c)
 
 ## Tabla Huespedes
-![image](https://github.com/AndresFonseca132/hotelalura/assets/125603660/cf481bc2-aef0-4e53-b256-b75cbca58f08)
+![image](https://github.com/AndresFonseca132/hotelalura/assets/125603660/2946bfeb-4cd0-4d68-8fcf-06df9f0f99a7)
+
 
